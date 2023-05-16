@@ -16,7 +16,7 @@ class WeatherViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var searchTextField: UITextField!
     
-    
+    var weatherManager = WeatherManager()
  
     
     
@@ -50,6 +50,14 @@ class WeatherViewController: UIViewController, UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         
         // get text search query
+        
+        // api key 31ed122c8187adfdd857ee0c9c894284
+        
+        // api follwing https://api.openweathermap.org/data/2.5/weather?q={city name}&appid=31ed122c8187adfdd857ee0c9c894284&units=metric
+        
+        if let city = searchTextField.text {
+            weatherManager.fetchWeather(cityName: city)
+        }
         
         searchTextField.text = ""
     }
