@@ -34,6 +34,10 @@ class WeatherViewController: UIViewController {
     
 
     
+    @IBAction func locationButtonPressed(_ sender: UIButton) {
+        locationManager.requestLocation()
+        
+    }
     
 
 
@@ -68,11 +72,6 @@ extension WeatherViewController: UITextFieldDelegate {
 
         func textFieldDidEndEditing(_ textField: UITextField) {
             
-            // get text search query
-            
-            // api key 31ed122c8187adfdd857ee0c9c894284
-            
-            // api follwing https://api.openweathermap.org/data/2.5/weather?q={city name}&appid=31ed122c8187adfdd857ee0c9c894284&units=metric
             
             if let city = searchTextField.text {
                 weatherManager.fetchWeatherbyCity(cityName: city)
@@ -105,9 +104,14 @@ extension WeatherViewController: WeatherManagerDelegate {
 
 
 extension WeatherViewController: CLLocationManagerDelegate {
+    
+
+    
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 //        print("got location")
         if let location = locations.last {
+            locationManager.stopUpdatingLocation()
             let lat = location.coordinate.latitude
             let lon = location.coordinate.longitude
             weatherManager.fetchWeather(latitude: lat, longitude: lon)
